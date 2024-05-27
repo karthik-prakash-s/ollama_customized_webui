@@ -12,6 +12,7 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.concurrency import run_in_threadpool
+from . import prompt_router
 
 from pydantic import BaseModel, ConfigDict
 
@@ -841,9 +842,10 @@ async def generate_chat_completion(
     url_idx: Optional[int] = None,
     user=Depends(get_verified_user),
 ):
-
+    
     if url_idx == None:
-        model = form_data.model
+        print(form_data.messages, "messages ==>")
+        # model = prompt_router(form_data.messages.)
 
         if ":" not in model:
             model = f"{model}:latest"
