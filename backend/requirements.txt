@@ -172,7 +172,7 @@ lxml==5.2.2
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 marshmallow==3.21.2
-matplotlib==3.8.3
+matplotlib==3.9.0
 matplotlib-inline==0.1.6
 mdurl==0.1.2
 mecab-python3==1.0.9
