@@ -849,7 +849,7 @@ async def generate_chat_completion(
     if "[Direct Query]" in str(prompt_template):
         model = "gemma:2b"
     else:
-        model = "llama3"
+        model = "phi3"
 
     log.info(f"model: {model}")
     if ":" not in model:
