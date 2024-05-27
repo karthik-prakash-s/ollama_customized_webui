@@ -842,29 +842,27 @@ async def generate_chat_completion(
     url_idx: Optional[int] = None,
     user=Depends(get_verified_user),
 ):
+    user_messages = [message for message in form_data.messages if message.get("role") == "user"]
+    prompt_template = prompt_router(user_messages[-1])
+    if "[Summary Request]" in str(prompt_template):
+        model = "gemma:2b"
+    if "[Direct Query]" in str(prompt_template):
+        model = "gemma:2b"
+    else:
+        model = "llama3"
+
+    log.info(f"model: {model}")
+    if ":" not in model:
+        model = f"{model}:latest"
+
+    if model in app.state.MODELS:
+        url_idx = random.choice(app.state.MODELS[model]["urls"])
     
-    if url_idx == None:
-        log.info(f"entered")
-        user_messages = [message for message in form_data.messages if message.get("role") == "user"]
-        prompt_template = prompt_router(user_messages[-1])
-        if "[Summary Request]" in str(prompt_template):
-            model = "gemma:2b"
-        if "[Direct Query]" in str(prompt_template):
-            model = "gemma:2b"
-        else:
-            model = "llama3"
-
-        log.info(f"model: {model}")
-        if ":" not in model:
-            model = f"{model}:latest"
-
-        if model in app.state.MODELS:
-            url_idx = random.choice(app.state.MODELS[model]["urls"])
-        else:
-            raise HTTPException(
-                status_code=400,
-                detail=ERROR_MESSAGES.MODEL_NOT_FOUND(form_data.model),
-            )
+    if not url_idx: 
+        raise HTTPException(
+            status_code=400,
+            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(form_data.model),
+        )
 
     url = app.state.OLLAMA_BASE_URLS[url_idx]
     log.info(f"url: {url}")
