@@ -853,7 +853,7 @@ async def generate_chat_completion(
         else:
             model = "llama3"
 
-        log.info(model, "model")
+        log.info(f"model: {model}")
         if ":" not in model:
             model = f"{model}:latest"
 
