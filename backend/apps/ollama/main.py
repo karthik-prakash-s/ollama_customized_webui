@@ -853,6 +853,7 @@ async def generate_chat_completion(
         else:
             model = "llama3"
 
+        print(model, "model")
         if ":" not in model:
             model = f"{model}:latest"
 
