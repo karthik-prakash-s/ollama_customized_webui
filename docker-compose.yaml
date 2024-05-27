@@ -31,6 +31,13 @@ services:
       - host.docker.internal:host-gateway
     restart: unless-stopped
 
+  llm-router:
+    build:
+      context: ./llm-router
+      dockerfile: Dockerfile
+    # ports:
+    #   - "8080:5002"  # Map host port 8080 to container port 5000
+
   etcd:
     container_name: milvus-etcd
     image: quay.io/coreos/etcd:v3.5.5
