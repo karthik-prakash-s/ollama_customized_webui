@@ -12,7 +12,7 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.concurrency import run_in_threadpool
-from . import llmrouter 
+from apps.ollama.llmrouter import prompt_router 
 
 from pydantic import BaseModel, ConfigDict
 
@@ -845,7 +845,7 @@ async def generate_chat_completion(
     
     if url_idx == None:
         user_messages = [message for message in form_data.messages if message.get("role") == "user"]
-        prompt_template = llmrouter.prompt_router(user_messages[-1])
+        prompt_template = prompt_router(user_messages[-1])
         if "[Summary Request]" in str(prompt_template):
             model = "gemma:2b"
         if "[Direct Query]" in str(prompt_template):
