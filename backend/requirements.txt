@@ -171,7 +171,6 @@ kiwisolver==1.4.5
 konlpy==0.6.0
 kubernetes==29.0.0
 langchain==0.2.0
-langchain-community==0.2.0
 langchain-core==0.2.1
 langchain-text-splitters==0.2.0
 langchainhub==0.1.15
