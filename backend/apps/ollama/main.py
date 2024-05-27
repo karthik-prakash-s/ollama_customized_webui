@@ -844,6 +844,7 @@ async def generate_chat_completion(
 ):
     
     if url_idx == None:
+        log.info(f"entered")
         user_messages = [message for message in form_data.messages if message.get("role") == "user"]
         prompt_template = prompt_router(user_messages[-1])
         if "[Summary Request]" in str(prompt_template):
