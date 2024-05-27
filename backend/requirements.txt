@@ -26,11 +26,16 @@ argon2-cffi==23.1.0
 APScheduler==3.10.4
 google-generativeai==0.5.2
 
+langchain==0.1.16
+langchain-community==0.0.34
+langchain-chroma==0.1.0
+
 fake-useragent==1.5.1
 chromadb==0.4.24
 sentence-transformers==2.7.0
 pypdf==4.2.0
 docx2txt==0.8
+python-pptx==0.6.23
 unstructured==0.11.8
 Markdown==3.6
 pypandoc==1.13

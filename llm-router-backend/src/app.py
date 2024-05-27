@@ -4,7 +4,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 # Define a route to receive large text
-@app.post("/process_text/")
+@app.post("/get-llm")
 async def process_text(text: str):
     # Process the received text here
     # For demonstration, let's just return the length of the text
