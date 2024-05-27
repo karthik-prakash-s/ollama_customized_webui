@@ -108,8 +108,6 @@ environs==9.5.0
 exceptiongroup==1.2.0
 executing==2.0.1
 faiss-cpu==1.7.4
-fastapi==0.111.0
-fastapi-cli==0.0.3
 fastavro==1.9.4
 fastjsonschema==2.19.1
 filelock==3.13.3
