@@ -844,8 +844,14 @@ async def generate_chat_completion(
 ):
     
     if url_idx == None:
-        print(form_data.messages, "messages ==>")
-        # model = prompt_router(form_data.messages.)
+        user_messages = [message for message in form_data.messages if message.get("role") == "user"]
+        prompt_template = prompt_router(user_messages[-1])
+        if "[Summary Request]" in str(prompt_template):
+            model = "gemma:2b"
+        if "[Direct Query]" in str(prompt_template):
+            model = "gemma:2b"
+        else:
+            model = "llama3"
 
         if ":" not in model:
             model = f"{model}:latest"

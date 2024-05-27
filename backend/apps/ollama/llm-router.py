@@ -129,8 +129,10 @@ prompt_embeddings = embedding.embed_documents(prompt_templates)
 similarity_threshold = 0.01  # Adjust this value as needed
 
 # Route question to prompt
-def prompt_router(query,context):  
+def prompt_router(query):  
     # Embed question
+    context = compression_retriever.invoke(query)
+
     query_embedding = embedding.embed_query(query)
     # Compute similarity
     similarities = cosine_similarity([query_embedding], prompt_embeddings)[0]
