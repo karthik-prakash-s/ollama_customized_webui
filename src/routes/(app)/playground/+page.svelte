@@ -70,7 +70,7 @@
 		const [res, controller] = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				model: model.id,
+				model: 'phi3:latest',
 				stream: true,
 				messages: [
 					{
@@ -138,7 +138,7 @@
 		const [res, controller] = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				model: model.id,
+				model: 'phi3:latest',
 				stream: true,
 				messages: [
 					system

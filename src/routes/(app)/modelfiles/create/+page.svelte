@@ -36,7 +36,7 @@
 	let content = '';
 
 	// Builder Mode
-	let model = '';
+	let model = 'phi3:latest';
 	let system = '';
 	let template = '';
 	let options = {

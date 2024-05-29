@@ -258,7 +258,7 @@
 
 		await Promise.all(
 			(atSelectedModel !== '' ? [atSelectedModel.id] : selectedModels).map(async (modelId) => {
-				const model = $models.filter((m) => m.id === modelId).at(0);
+				const model = 'phi3:latest';
 
 				if (model) {
 					// Create response message
@@ -269,7 +269,7 @@
 						childrenIds: [],
 						role: 'assistant',
 						content: '',
-						model: model.id,
+						model: model,
 						timestamp: Math.floor(Date.now() / 1000) // Unix epoch
 					};
 
@@ -290,9 +290,7 @@
 					} else if (model) {
 						await sendPromptOllama(model, prompt, responseMessageId, _chatId);
 					}
-				} else {
-					toast.error($i18n.t(`Model {{modelId}} not found`, { modelId }));
-				}
+				} 
 			})
 		);
 
@@ -780,9 +778,7 @@
 						_chatId
 					);
 			}
-		} else {
-			toast.error($i18n.t(`Model {{modelId}} not found`, { modelId }));
-		}
+		} 
 	};
 
 	const generateChatTitle = async (userPrompt) => {

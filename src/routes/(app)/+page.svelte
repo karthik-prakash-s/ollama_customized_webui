@@ -555,7 +555,7 @@
 		const [res, controller] = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				model: model.id,
+				model: 'phi3:latest',
 				stream: true,
 				messages: [
 					$settings.system
@@ -773,9 +773,7 @@
 						_chatId
 					);
 			}
-		} else {
-			toast.error($i18n.t(`Model {{modelId}} not found`, { modelId }));
-		}
+		} 
 	};
 
 	const generateChatTitle = async (userPrompt) => {
