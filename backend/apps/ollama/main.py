@@ -1,13 +1,11 @@
 from fastapi import (
     FastAPI,
     Request,
-    Response,
     HTTPException,
     Depends,
     status,
     UploadFile,
     File,
-    BackgroundTasks,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -841,28 +839,32 @@ async def generate_chat_completion(
     url_idx: Optional[int] = None,
     user=Depends(get_verified_user),
 ):
-    # user_messages = [message for message in form_data.messages if message.get("role") == "user"]
-    # prompt_template = prompt_router(user_messages[-1])
-    # if "[Summary Request]" in str(prompt_template):
-    #     model = "gemma:2b"
-    # if "[Direct Query]" in str(prompt_template):
-    #     model = "gemma:2b"
-    # else:
-    #     model = "phi3"
+    # user_messages = [message for message in form_data.messages if message["role"] == "user"]
+    prompt_template_res = requests.request(
+                method="POST",
+                url="https://refactored-invention-976g97xv4xqw3wr9-5002.app.github.dev/get-llm",
+                data={"text": 'hi'},
+            )
+    prompt_template = prompt_template_res.template if prompt_template_res and prompt_template_res.template else ""
+    if "[Summary Request]" in str(prompt_template):
+        model = "gemma:2b"
+    elif "[Direct Query]" in str(prompt_template):
+        model = "gemma:2b"
+    else:
+        model = "phi3:latest"
 
-    model = "phi3"
-    log.info(f"model: {model}")
-    if ":" not in model:
-        model = f"{model}:latest"
+    log.info(f"model: {model} {prompt_template} {app.state.MODELS}")
+    # if ":" not in model:
+    #     model = f"{model}:latest"
 
     if model in app.state.MODELS:
         url_idx = random.choice(app.state.MODELS[model]["urls"])
     
-    if not url_idx: 
-        raise HTTPException(
-            status_code=400,
-            detail=ERROR_MESSAGES.MODEL_NOT_FOUND(form_data.model),
-        )
+    # if not url_idx: 
+    #     raise HTTPException(
+    #         status_code=400,er
+    #         detail=ERROR_MESSAGES.MODEL_NOT_FOUND(form_data.model),
+    #     )
 
     url = app.state.OLLAMA_BASE_URLS[url_idx]
     log.info(f"url: {url}")
