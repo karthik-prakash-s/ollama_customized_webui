@@ -173,9 +173,7 @@
 			$models.map((m) => m.id).includes(modelId) ? modelId : ''
 		);
 
-		if (selectedModels.includes('')) {
-			toast.error($i18n.t('Model not selected'));
-		} else if (messages.length != 0 && messages.at(-1).done != true) {
+		if (messages.length != 0 && messages.at(-1).done != true) {
 			// Response not done
 			console.log('wait');
 		} else if (
@@ -255,8 +253,7 @@
 
 		await Promise.all(
 			(atSelectedModel !== '' ? [atSelectedModel.id] : selectedModels).map(async (modelId) => {
-				console.log('modelId', modelId);
-				const model = $models.filter((m) => m.id === modelId).at(0);
+				const model = $models[0];
 
 				if (model) {
 					// Create response message
@@ -288,8 +285,6 @@
 					} else if (model) {
 						await sendPromptOllama(model, prompt, responseMessageId, _chatId);
 					}
-				} else {
-					toast.error($i18n.t(`Model {{modelId}} not found`, { modelId }));
 				}
 			})
 		);
@@ -361,7 +356,7 @@
 			.flat(1);
 
 		const [res, controller] = await generateChatCompletion(localStorage.token, {
-			model: model,
+			model: 'phi3:latest',
 			messages: messagesBody,
 			options: {
 				...($settings.options ?? {}),

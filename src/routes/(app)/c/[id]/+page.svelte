@@ -183,9 +183,7 @@
 	const submitPrompt = async (userPrompt, _user = null) => {
 		console.log('submitPrompt', $chatId);
 
-		if (selectedModels.includes('')) {
-			toast.error($i18n.t('Model not selected'));
-		} else if (messages.length != 0 && messages.at(-1).done != true) {
+	     if (messages.length != 0 && messages.at(-1).done != true) {
 			// Response not done
 			console.log('wait');
 		} else if (
@@ -302,7 +300,7 @@
 	};
 
 	const sendPromptOllama = async (model, userPrompt, responseMessageId, _chatId) => {
-		model = model.id;
+		model = model.id || 'gemma2';
 		const responseMessage = history.messages[responseMessageId];
 
 		// Wait until history/message have been updated
@@ -365,7 +363,7 @@
 			.flat(1);
 
 		const [res, controller] = await generateChatCompletion(localStorage.token, {
-			model: model,
+			model: 'phi3:latest',
 			messages: messagesBody,
 			options: {
 				...($settings.options ?? {}),
@@ -564,7 +562,7 @@
 		const [res, controller] = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				model: model.id,
+				model: 'phi3:latest',
 				stream: true,
 				messages: [
 					$settings.system
