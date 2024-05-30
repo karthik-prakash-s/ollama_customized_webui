@@ -341,9 +341,9 @@
 		<div class="w-full overflow-hidden">
 			<Name>
 				{#if message.model in modelfiles}
-					{modelfiles[message.model]?.title}
+					{$i18n.t('DEFAI')}
 				{:else}
-					{message.model ? ` ${message.model}` : ''}
+					{$i18n.t('DEFAI')}
 				{/if}
 
 				{#if message.timestamp}
