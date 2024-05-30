@@ -1,11 +1,13 @@
 from fastapi import (
     FastAPI,
     Request,
+    Response,
     HTTPException,
     Depends,
     status,
     UploadFile,
     File,
+    BackgroundTasks,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -839,11 +841,11 @@ async def generate_chat_completion(
     url_idx: Optional[int] = None,
     user=Depends(get_verified_user),
 ):
-    # user_messages = [message for message in form_data.messages if message["role"] == "user"]
+    user_messages = [message for message in form_data.messages if message.role == "user"]
     prompt_template_res = requests.request(
                 method="POST",
                 url="https://refactored-invention-976g97xv4xqw3wr9-5002.app.github.dev/get-llm",
-                data={"text": 'hi'},
+                data={"text": user_messages[-1].content},
             )
     prompt_template = prompt_template_res.template if prompt_template_res and prompt_template_res.template else ""
     if "[Summary Request]" in str(prompt_template):
@@ -853,7 +855,7 @@ async def generate_chat_completion(
     else:
         model = "phi3:latest"
 
-    log.info(f"model: {model} {prompt_template} {app.state.MODELS}")
+    log.info(f"model: {model} {form_data.messages} {user_messages[-1].content}")
     # if ":" not in model:
     #     model = f"{model}:latest"
 
@@ -962,7 +964,7 @@ async def generate_openai_chat_completion(
 ):
 
     if url_idx == None:
-        model = form_data.model
+        model = form_data.model or 'phi3:latest'
 
         if ":" not in model:
             model = f"{model}:latest"
