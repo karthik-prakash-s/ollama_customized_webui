@@ -258,7 +258,7 @@
 
 		await Promise.all(
 			(atSelectedModel !== '' ? [atSelectedModel.id] : selectedModels).map(async (modelId) => {
-				const model = 'phi3:latest';
+				const model = 'gemma:7b';
 
 				if (model) {
 					// Create response message
@@ -361,7 +361,7 @@
 			.flat(1);
 
 		const [res, controller] = await generateChatCompletion(localStorage.token, {
-			model: 'phi3:latest',
+			model: 'gemma:7b',
 			messages: messagesBody,
 			options: {
 				...($settings.options ?? {}),
@@ -560,7 +560,7 @@
 		const [res, controller] = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				model: 'phi3:latest',
+				model: 'gemma:7b',
 				stream: true,
 				messages: [
 					$settings.system

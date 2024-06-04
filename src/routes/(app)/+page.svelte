@@ -356,7 +356,7 @@
 			.flat(1);
 
 		const [res, controller] = await generateChatCompletion(localStorage.token, {
-			model: 'phi3:latest',
+			model: 'gemma:7b',
 			messages: messagesBody,
 			options: {
 				...($settings.options ?? {}),
@@ -555,7 +555,7 @@
 		const [res, controller] = await generateOpenAIChatCompletion(
 			localStorage.token,
 			{
-				model: 'phi3:latest',
+				model: 'gemma:7b',
 				stream: true,
 				messages: [
 					$settings.system

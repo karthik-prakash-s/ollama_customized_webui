@@ -36,7 +36,7 @@
 	let content = '';
 
 	// Builder Mode
-	let model = 'phi3:latest';
+	let model = 'gemma:7b';
 	let system = '';
 	let template = '';
 	let options = {

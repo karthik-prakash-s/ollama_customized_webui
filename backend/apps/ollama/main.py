@@ -844,23 +844,23 @@ async def generate_chat_completion(
     user_messages = [message for message in form_data.messages if message.role == "user"]
     prompt_template_res = requests.request(
                 method="POST",
-                url="https://refactored-invention-976g97xv4xqw3wr9-5002.app.github.dev/get-llm",
+                url="http://llm-router:8001/get-llm",
                 data={"text": user_messages[-1].content},
             )
     prompt_template = prompt_template_res.template if prompt_template_res and prompt_template_res.template else ""
     if "[Summary Request]" in str(prompt_template):
-        model = "gemma:2b"
+        model = "gemma:7b"
     elif "[Direct Query]" in str(prompt_template):
-        model = "gemma:2b"
+        model = "gemma:7b"
     else:
-        model = "phi3:latest"
+        model = "llama3:70b"
 
     log.info(f"model: {model} {form_data.messages} {user_messages[-1].content}")
     # if ":" not in model:
     #     model = f"{model}:latest"
 
     if model in app.state.MODELS:
-        url_idx = random.choice(app.state.MODELS[model]["urls"])
+        url_idx = app.state.MODELS[model]["urls"][0]
     
     # if not url_idx: 
     #     raise HTTPException(
@@ -964,7 +964,7 @@ async def generate_openai_chat_completion(
 ):
 
     if url_idx == None:
-        model = form_data.model or 'phi3:latest'
+        model = form_data.model or 'llama3:70b'
 
         if ":" not in model:
             model = f"{model}:latest"
